@@ -1,0 +1,11 @@
+[package]
+name = "fibonacci-calculator"
+version = "0.1.0"
+authors = ["Abhrankan Chakrabarti"]
+description = "Compute Fibonacci numbers with support for scientific and hexadecimal input"
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+malachite = "0.3"
+clap = { version = "4.5", features = ["derive"] }
