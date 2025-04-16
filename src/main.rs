@@ -1,8 +1,12 @@
 use anyhow::Result;
 use clap::Parser;
-use malachite::Integer;
-use malachite::num::arithmetic::traits::Square;
-use malachite::num::basic::traits::{One, Two, Zero};
+use malachite::{
+    Integer,
+    base::num::{
+        arithmetic::traits::Square,
+        basic::traits::{One, Two, Zero},
+    },
+};
 use std::{io::{self, Write}, time::Instant};
 
 #[derive(Parser, Debug)]
@@ -46,6 +50,8 @@ fn parse_input(s: &str) -> Option<i32> {
     }
 }
 
+const FOUR: Integer = Integer::const_from_unsigned(4);
+
 fn fib(n: i32) -> Integer {
     if n == 0 {
         return Integer::ZERO;
@@ -54,13 +60,15 @@ fn fib(n: i32) -> Integer {
         return Integer::ONE;
     }
     if n % 2 == 0 {
-        let a = fib(n / 2);
-        let b = fib(n / 2 - 1);
+        let k = n / 2;
+        let a = fib(k);
+        let b = fib(k - 1);
         return &a * (Integer::TWO * &b + &a);
     }
-    let a = fib((n + 1) / 2);
-    let b = fib((n - 1) / 2);
-    return a.square() + b.square();
+    let k = (n - 1) / 2;
+    let a = fib(k);
+    let b = fib(k - 1);
+    return FOUR * a.square() - b.square() + Integer::from(-4 * (k % 2) + 2);
 }
 
 fn main() -> Result<()> {
