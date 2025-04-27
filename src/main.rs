@@ -2,10 +2,7 @@ use anyhow::Result;
 use clap::Parser;
 use malachite::{
     Integer,
-    base::num::{
-        arithmetic::traits::Square,
-        basic::traits::{One, Two, Zero},
-    },
+    base::num::basic::traits::{One, Two, Zero},
 };
 use std::{io::{self, Write}, time::Instant};
 
@@ -50,8 +47,6 @@ fn parse_input(s: &str) -> Option<i32> {
     }
 }
 
-const FOUR: Integer = Integer::const_from_unsigned(4);
-
 fn fib(n: i32) -> Integer {
     if n == 0 {
         return Integer::ZERO;
@@ -68,7 +63,7 @@ fn fib(n: i32) -> Integer {
     let k = (n - 1) / 2;
     let a = fib(k);
     let b = fib(k - 1);
-    return FOUR * a.square() - b.square() + Integer::from(-4 * (k % 2) + 2);
+    return (Integer::TWO * &a + &b) * (Integer::TWO * &a - &b) + Integer::from(-4 * (k % 2) + 2);
 }
 
 fn main() -> Result<()> {
